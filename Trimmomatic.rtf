@@ -1,0 +1,29 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2707
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red203\green36\blue24;\red194\green0\blue255;\red0\green0\blue0;
+\red105\green103\blue149;\red193\green101\blue28;}
+{\*\expandedcolortbl;;\cssrgb\c84216\c22321\c11961;\cssrgb\c81453\c23167\c100000;\csgray\c0;
+\cssrgb\c48832\c48617\c65037;\cssrgb\c80555\c47366\c13837;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \CocoaLigature0 #!/bin/\cf3 bash\cf2  --login                                                                                                                                                                                         \cf4 \
+\cf2 ########## Define Resources Needed with SBATCH Lines ##########                                                                                                                                             \cf4 \
+\
+\cf2 #SBATCH --time=40:00:00             # limit of wall clock time - how long the job will run (same as -t)                                                                                                     \cf4 \
+\cf2 #SBATCH --ntasks=1                  # number of tasks - how many tasks (nodes) that you require (same as -n)                                                                                                \cf4 \
+\cf2 #SBATCH --cpus-per-task=1           # number of CPUs (or cores) per task (same as -c)                                                                                                                       \cf4 \
+\cf2 #SBATCH --mem=2G                    # memory required per node - amount of memory (in bytes)                                                                                                                \cf4 \
+\cf2 #SBATCH --job-name trim_test      # you can give your job a name for easier identification (same as -J)                                                                                                     \cf4 \
+\
+\
+\cf2 ########## Command Lines to Run ##########                                                                                                                                                                  \cf4 \
+\
+module load Trimmomatic/0.39-Java-11\
+\
+\cf5 cd\cf4  /mnt/home/moonjel1/20210917_mRNASeq_SE100/ \cf2 ### change to the directory where your data is located                                                                                                        \cf4 \
+\
+java -jar /opt/software/Trimmomatic/0.39-Java-11/trimmomatic-0.39.jar SE -threads 1 -trimlog 1_R1A_0H_BF_S1_L002_R1_001.log 1_R1A_0H_BF_S1_L002_R1_001.fastq.gz 1_R1A_0H_BF_S1_L002_R1_001_trimmomaticSE.fa\\\
+stq.gz ILLUMINACLIP:NexteraPE-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36\
+\
+scontrol show job $\cf6 SLURM_JOB_ID\cf4      \cf2 ### write job information to output file}
