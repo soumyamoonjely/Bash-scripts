@@ -1,0 +1,21 @@
+#!/bin/bash --login                                                                                                                                           
+########## Define Resources Needed with SBATCH Lines ##########                                                                                               
+
+#SBATCH --time=24:00:00             # limit of wall clock time - how long the job will run (same as -t)                                                       
+#SBATCH --ntasks=1                  # number of tasks - how many tasks (nodes) that you require (same as -n)                                                  
+#SBATCH --cpus-per-task=1           # number of CPUs (or cores) per task (same as -c)                                                                         
+#SBATCH --mem=40G                    # memory required per node - amount of memory (in bytes)                                                                 
+#SBATCH --job-name hisat-index      # you can give your job a name for easier identification (same as -J)                                                     
+
+
+########## Command Lines to Run ##########                                                                                                                    
+
+module load hisat2/2.1.0
+
+cd /mnt/home/moonjel1/Fg_RNASeq__PDA_PooledSeq/FGSGPDA_Pooled_Seq/FusariumRefSequences_King_etal2015_FromEnsembl/ ### change to the directory where your data\
+ is located                                                                                                                                                   
+
+hisat2-build /mnt/home/moonjel1/Fg_RNASeq__PDA_PooledSeq/FGSGPDA_Pooled_Seq/FusariumRefSequences_King_etal2015_FromEnsembl/Fusarium_graminearum.RR1.dna.tople\
+vel.fa /mnt/home/moonjel1/Fg_RNASeq__PDA_PooledSeq/FGSGPDA_Pooled_Seq/Fg_PDA_HiSat/Fusarium_graminearum.RR1.dna.toplevel
+
+scontrol show job $SLURM_JOB_ID     ### write job information to output file                                                                                  
